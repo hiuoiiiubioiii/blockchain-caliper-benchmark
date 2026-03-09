@@ -1,0 +1,29 @@
+test:
+  name: "Secure Data Storage Benchmark"
+  description: "Benchmark testing for storing and retrieving secure data on a local Ethereum network."
+  workers:
+    type: local
+    number: 2
+  rounds:
+    - label: storeData
+      description: "Store data hash"
+      txNumber: 100
+      rateControl:
+        type: fixed-rate
+        opts:
+          tps: 20
+      workload:
+        module: workload/storeData.js
+        arguments:
+          contractId: "secureDataStorage"
+    - label: getData
+      description: "Retrieve data hash"
+      txNumber: 100
+      rateControl:
+        type: fixed-rate
+        opts:
+          tps: 50
+      workload:
+        module: workload/retrieveData.js
+        arguments:
+          contractId: "secureDataStorage"

@@ -1,0 +1,24 @@
+# Node dependencies
+node_modules/
+npm-debug.log
+dummy_npm_global/
+
+# Compiler output
+artifacts/
+cache/
+*.bin
+*.abi
+
+# Logs
+*.log
+logs/
+
+# Optional npm cache directory
+.npm
+
+# Mac OS
+.DS_Store
+
+# Caliper generated files
+caliper-workspace/caliper-workspace/
+report.html
