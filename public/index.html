@@ -54,6 +54,18 @@
             background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%);
             border: 1px solid rgba(148, 163, 184, 0.1);
         }
+
+        /* Scroll Reveal Animation Classes */
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+
+        .reveal-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
     <script type="module">
         import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
@@ -112,7 +124,8 @@
         </header>
 
         <!-- Project Logic Explanation Section -->
-        <section class="glass-panel rounded-3xl p-8 md:p-10 explanation-section relative overflow-hidden">
+        <section
+            class="glass-panel rounded-3xl p-8 md:p-10 explanation-section relative overflow-hidden reveal-on-scroll">
             <h2 class="text-2xl md:text-3xl font-bold mb-8 text-white flex items-center gap-3">
                 <i data-lucide="book-open" class="text-indigo-400"></i>
                 Project Logic & Architecture
@@ -176,7 +189,7 @@
         </section>
 
         <!-- Evolution / How It Was Built Section -->
-        <section class="glass-panel rounded-3xl p-8 md:p-10 relative overflow-hidden">
+        <section class="glass-panel rounded-3xl p-8 md:p-10 relative overflow-hidden reveal-on-scroll">
             <h2 class="text-2xl md:text-3xl font-bold mb-8 text-white flex items-center gap-3">
                 <i data-lucide="hammer" class="text-orange-400"></i>
                 Engineering Evolution: How It Was Built
@@ -241,7 +254,7 @@
         </section>
 
         <!-- System Architecture Diagram Section -->
-        <section class="glass-panel rounded-3xl p-8 md:p-10 relative overflow-hidden">
+        <section class="glass-panel rounded-3xl p-8 md:p-10 relative overflow-hidden reveal-on-scroll">
             <h2 class="text-2xl md:text-3xl font-bold mb-8 text-white flex items-center gap-3">
                 <i data-lucide="share-2" class="text-pink-400"></i>
                 Complete File Architecture
@@ -281,7 +294,7 @@ graph LR
         </section>
 
         <!-- Architecture Workflow Timeline Section -->
-        <section class="glass-panel rounded-3xl p-8 md:p-10 relative overflow-hidden">
+        <section class="glass-panel rounded-3xl p-8 md:p-10 relative overflow-hidden reveal-on-scroll">
             <h2 class="text-2xl md:text-3xl font-bold mb-12 text-white flex items-center gap-3 justify-center">
                 <i data-lucide="git-merge" class="text-blue-400"></i>
                 CI/CD Snapshot Pipeline Architecture
@@ -369,7 +382,7 @@ graph LR
 
         <!-- Benchmark Execution Control Panel -->
         <section
-            class="w-full glass-panel rounded-3xl p-8 text-center relative overflow-hidden border border-slate-700/50">
+            class="w-full glass-panel rounded-3xl p-8 text-center relative overflow-hidden border border-slate-700/50 reveal-on-scroll">
             <div class="absolute inset-0 bg-blue-500/5 backdrop-blur-sm z-0"></div>
 
             <div class="relative z-10">
@@ -584,6 +597,25 @@ graph LR
                 particle.style.transform = `translate(${(Math.random() - 0.5) * 100}px, ${(Math.random() - 0.5) * 100}px)`;
             }, 500);
         }
+
+        // Automatic Scroll Reveal using Intersection Observer
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15
+        };
+        const scrollObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target); // Only animate once
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal-on-scroll').forEach((section) => {
+            scrollObserver.observe(section);
+        });
 
         // Number animation function
         function animateValue(obj, start, end, duration, decimals = 2) {
