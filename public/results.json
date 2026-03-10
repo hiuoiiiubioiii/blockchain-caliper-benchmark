@@ -1,0 +1,16 @@
+{
+  "success": true,
+  "data": {
+    "write": {
+      "tps": 68.96551724137932,
+      "timeSec": 0.725,
+      "count": 50
+    },
+    "read": {
+      "qps": 271.7391304347826,
+      "timeSec": 0.184,
+      "count": 50
+    },
+    "error": null
+  }
+}
