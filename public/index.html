@@ -55,6 +55,25 @@
             border: 1px solid rgba(148, 163, 184, 0.1);
         }
     </style>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ 
+            startOnLoad: true, 
+            theme: 'base',
+            themeVariables: {
+                background: 'transparent',
+                primaryColor: '#1e293b',
+                primaryTextColor: '#f8fafc',
+                primaryBorderColor: '#3b82f6',
+                lineColor: '#64748b',
+                secondaryColor: '#0f172a',
+                tertiaryColor: '#1e293b',
+                nodeBorder: '#3b82f6',
+                clusterBkg: 'rgba(30, 41, 59, 0.4)',
+                clusterBorder: 'rgba(56, 189, 248, 0.5)'
+            }
+        });
+    </script>
 </head>
 
 <body class="bg-[#0f172a] text-white min-h-screen flex flex-col antialiased relative">
@@ -181,7 +200,8 @@
                     </h3>
                     <p class="text-sm opacity-90 leading-relaxed">We began with a raw Node.js script. I refactored
                         <code>custom-benchmark.js</code> to isolate the Ganache transactions and securely return the
-                        TPS/QPS metrics as JSON instead of simply printing to the console.</p>
+                        TPS/QPS metrics as JSON instead of simply printing to the console.
+                    </p>
                 </div>
 
                 <!-- Phase 2 -->
@@ -198,7 +218,8 @@
                     <p class="text-sm opacity-90 leading-relaxed">A terminal script isn't a modern web app. I built a
                         persistent backend wrapper using <strong>Express.js</strong> and constructed this stunning
                         <strong>TailwindCSS</strong> dashboard to trigger benchmarks dynamically via HTTP fetch
-                        requests.</p>
+                        requests.
+                    </p>
                 </div>
 
                 <!-- Phase 3 -->
@@ -216,6 +237,46 @@
                         strictly requires static files), I wrote a new snapshot compilation script that fully bypasses
                         the live API server, creating a totally <strong>Static Serverless App!</strong></p>
                 </div>
+            </div>
+        </section>
+
+        <!-- System Architecture Diagram Section -->
+        <section class="glass-panel rounded-3xl p-8 md:p-10 relative overflow-hidden">
+            <h2 class="text-2xl md:text-3xl font-bold mb-8 text-white flex items-center gap-3">
+                <i data-lucide="share-2" class="text-pink-400"></i>
+                Complete File Architecture
+            </h2>
+            <p class="text-slate-400 text-sm mb-6 leading-relaxed">
+                The underlying filesystem generated to power this static serverless web application and its CI/CD
+                pipeline infrastructure.
+            </p>
+            <div
+                class="bg-slate-900/50 p-6 rounded-2xl border border-slate-700/50 overflow-x-auto w-full flex justify-center shadow-inner">
+                <pre class="mermaid">
+graph TD
+    Root[📁 blockchain-caliper-benchmark] --> GH[📁 .github]
+    Root --> CW[📁 caliper-workspace]
+    Root --> Contracts[📁 contracts]
+    Root --> Public[📁 public]
+    Root --> RootFiles[📄 Core Scripts]
+
+    %% GitHub Actions
+    GH --> Workflows[📁 workflows]
+    Workflows --> Benchmark[📄 benchmark.yml <br/> <i>Tests code on every commit</i>]
+    Workflows --> GHPages[📄 gh-pages.yml <br/> <i>Generates & deploys website</i>]
+
+    %% UI & Frontend
+    Public --> HTML[📄 index.html <br/> <i>The UI Dashboard</i>]
+    Public --> Results[📄 results.json <br/> <i>The compiled data snapshot</i>]
+
+    %% Core Backend Logic
+    RootFiles --> Custom[📄 custom-benchmark.js <br/> <i>Ganache/Ethers Logic</i>]
+    RootFiles --> GenStatic[📄 generate-static-benchmark.js <br/> <i>Builds the JSON</i>]
+    RootFiles --> Server[📄 server.js <br/> <i>Local Express backend</i>]
+    RootFiles --> Tunnel[📄 tunnel.js <br/> <i>LocalTunnel forwarder</i>]
+    RootFiles --> PkgJSON[📄 package.json <br/> <i>Dependencies & Scripts</i>]
+    RootFiles --> Render[📄 render.yaml <br/> <i>Render PaaS Config</i>]
+                </pre>
             </div>
         </section>
 
