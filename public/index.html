@@ -57,8 +57,8 @@
     </style>
     <script type="module">
         import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-        mermaid.initialize({ 
-            startOnLoad: true, 
+        mermaid.initialize({
+            startOnLoad: true,
             theme: 'base',
             themeVariables: {
                 background: 'transparent',
@@ -253,7 +253,7 @@
             <div
                 class="bg-slate-900/50 p-6 rounded-2xl border border-slate-700/50 overflow-x-auto w-full flex justify-center shadow-inner">
                 <pre class="mermaid">
-graph TD
+graph LR
     Root[📁 blockchain-caliper-benchmark] --> GH[📁 .github]
     Root --> CW[📁 caliper-workspace]
     Root --> Contracts[📁 contracts]
