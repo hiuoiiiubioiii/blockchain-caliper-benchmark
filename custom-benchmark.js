@@ -2,7 +2,13 @@ const ganache = require("ganache");
 const { ethers } = require("ethers");
 const fs = require("fs");
 
-async function runCustomBenchmark() {
+async function runCustomBenchmark(txCount = 50) {
+    let results = {
+        write: { tps: 0, timeSec: 0, count: txCount },
+        read: { qps: 0, timeSec: 0, count: txCount },
+        error: null
+    };
+
     console.log("Starting Ganache server...");
     const options = {
         wallet: { mnemonic: "test test test test test test test test test test test junk" },
@@ -33,7 +39,7 @@ async function runCustomBenchmark() {
         const deployedAddress = contract.address;
         console.log("SecureDataStorage deployed to:", deployedAddress);
 
-        const TX_COUNT = 50;
+        const TX_COUNT = txCount;
 
         console.log(`\nStarting Custom Benchmark: ${TX_COUNT} Transactions`);
 
@@ -56,7 +62,10 @@ async function runCustomBenchmark() {
 
         let endTime = Date.now();
         let totalTimeSec = (endTime - startTime) / 1000;
-        let tps = TX_COUNT / totalTimeSec;
+        let tps = (TX_COUNT / totalTimeSec) || 0;
+
+        results.write.tps = tps;
+        results.write.timeSec = totalTimeSec;
 
         console.log(`Successfully stored ${TX_COUNT} records.`);
         console.log(`Total Time: ${totalTimeSec.toFixed(2)} s`);
@@ -75,7 +84,10 @@ async function runCustomBenchmark() {
 
         endTime = Date.now();
         totalTimeSec = (endTime - startTime) / 1000;
-        tps = TX_COUNT / totalTimeSec;
+        tps = (TX_COUNT / totalTimeSec) || 0;
+
+        results.read.qps = tps;
+        results.read.timeSec = totalTimeSec;
 
         console.log(`Successfully retrieved ${TX_COUNT} records.`);
         console.log(`Total Time: ${totalTimeSec.toFixed(2)} s`);
@@ -83,11 +95,17 @@ async function runCustomBenchmark() {
 
     } catch (err) {
         console.error("Error during execution:", err);
+        results.error = err.message;
     } finally {
         console.log("Closing Ganache server...");
         await server.close();
         console.log("Cleanup complete.");
     }
+    return results;
 }
 
-runCustomBenchmark().catch(console.error);
+if (require.main === module) {
+    runCustomBenchmark().catch(console.error);
+}
+
+module.exports = { runCustomBenchmark };
