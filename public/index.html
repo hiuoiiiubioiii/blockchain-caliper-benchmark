@@ -337,32 +337,101 @@
         </section>
 
         <!-- System Architecture Diagram Section -->
-        <section
-            class="glass-panel rounded-3xl p-8 md:p-10 relative overflow-hidden reveal-on-scroll border border-cyan-500/30 shadow-[0_0_20px_rgba(0,242,254,0.1)] w-full">
-            <h2 class="text-2xl md:text-3xl font-bold mb-2 text-white flex items-center gap-3">
-                <i data-lucide="git-branch-plus" class="text-cyan-400"></i>
-                Advanced Execution Pipeline
-            </h2>
-            <p class="text-slate-400 text-sm mb-6 leading-relaxed">
-                A vertical mechanical blueprint of our fully automated Serverless CI/CD flow — from developer commit to
-                global delivery.
-            </p>
-            <div class="bg-slate-900/50 p-6 rounded-2xl border border-cyan-500/50 w-full flex justify-center shadow-inner relative"
-                style="min-height: 80vh;">
-                <!-- Mechanical corner accents -->
-                <div class="absolute top-3 left-3 w-3 h-3 bg-cyan-400 rounded-full animate-ping opacity-75"></div>
-                <div class="absolute top-3 left-3 w-3 h-3 bg-cyan-400 rounded-full"></div>
-                <div class="absolute top-3 right-3 w-3 h-3 bg-cyan-400 rounded-full"></div>
-                <div class="absolute bottom-3 left-3 w-3 h-3 bg-cyan-400 rounded-full"></div>
-                <div class="absolute bottom-3 right-3 w-3 h-3 bg-cyan-400 rounded-full animate-ping opacity-75"></div>
-                <div class="absolute bottom-3 right-3 w-3 h-3 bg-cyan-400 rounded-full"></div>
-                <!-- Corner bracket decorations -->
-                <div class="absolute top-2 left-2 w-6 h-6 border-t-2 border-l-2 border-cyan-400 opacity-80"></div>
-                <div class="absolute top-2 right-2 w-6 h-6 border-t-2 border-r-2 border-cyan-400 opacity-80"></div>
-                <div class="absolute bottom-2 left-2 w-6 h-6 border-b-2 border-l-2 border-cyan-400 opacity-80"></div>
-                <div class="absolute bottom-2 right-2 w-6 h-6 border-b-2 border-r-2 border-cyan-400 opacity-80"></div>
+        <section class="rounded-3xl relative overflow-hidden reveal-on-scroll w-full"
+            style="background: linear-gradient(135deg, rgba(6,18,42,0.97) 0%, rgba(0,30,50,0.99) 100%); border: 1px solid rgba(0,242,254,0.3); box-shadow: 0 0 50px rgba(0,242,254,0.1), inset 0 0 80px rgba(0,0,0,0.5);">
 
-                <pre class="mermaid w-full" style="font-size: 14px;">
+            <!-- Terminal Header Bar -->
+            <div class="flex items-center justify-between px-6 py-3 border-b border-cyan-500/20"
+                style="background: rgba(0,242,254,0.04);">
+                <div class="flex items-center gap-3">
+                    <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                    <div class="w-3 h-3 bg-yellow-400 rounded-full"></div>
+                    <div class="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+                    <span class="text-cyan-500/60 text-xs font-mono ml-3 tracking-widest uppercase">gh-pages.yml —
+                        execution pipeline trace</span>
+                </div>
+                <div class="flex items-center gap-4">
+                    <span class="flex items-center gap-1.5 text-green-400 text-xs font-mono font-bold">
+                        <span class="w-2 h-2 bg-green-400 rounded-full animate-ping inline-block"></span> LIVE
+                    </span>
+                    <span class="text-cyan-400/40 text-xs font-mono">✓ passing</span>
+                </div>
+            </div>
+
+            <div class="p-8 md:p-12">
+                <!-- Centered Title -->
+                <div class="text-center mb-8">
+                    <div
+                        class="inline-flex items-center gap-2 bg-cyan-500/10 border border-cyan-500/30 rounded-full px-4 py-1.5 mb-5 text-xs font-mono text-cyan-400 uppercase tracking-widest">
+                        <i data-lucide="activity" class="w-3 h-3"></i> CI/CD State Machine
+                    </div>
+                    <h2
+                        class="text-3xl md:text-4xl font-extrabold mb-3 lively-heading justify-center flex items-center gap-3">
+                        <i data-lucide="git-branch-plus" class="w-8 h-8 text-cyan-400"></i>
+                        Advanced Execution Pipeline
+                    </h2>
+                    <p class="text-slate-400 text-sm max-w-2xl mx-auto leading-relaxed">
+                        A mechanical blueprint charting every state transition from <code
+                            class="text-cyan-400">git push</code> all the way to global CDN delivery.
+                    </p>
+                </div>
+
+                <!-- Tech Badge Row -->
+                <div class="flex flex-wrap justify-center gap-3 mb-10">
+                    <span
+                        class="flex items-center gap-1.5 bg-slate-800/80 border border-slate-600/40 rounded-lg px-3 py-1.5 text-xs font-mono text-slate-300"><i
+                            data-lucide="github" class="w-3 h-3 text-white"></i> GitHub Actions</span>
+                    <span
+                        class="flex items-center gap-1.5 bg-slate-800/80 border border-green-500/30 rounded-lg px-3 py-1.5 text-xs font-mono text-green-400"><i
+                            data-lucide="cpu" class="w-3 h-3"></i> Node.js v18</span>
+                    <span
+                        class="flex items-center gap-1.5 bg-slate-800/80 border border-cyan-500/30 rounded-lg px-3 py-1.5 text-xs font-mono text-cyan-400"><i
+                            data-lucide="zap" class="w-3 h-3"></i> Ganache In-Memory</span>
+                    <span
+                        class="flex items-center gap-1.5 bg-slate-800/80 border border-purple-500/30 rounded-lg px-3 py-1.5 text-xs font-mono text-purple-400"><i
+                            data-lucide="code-2" class="w-3 h-3"></i> Ethers.js</span>
+                    <span
+                        class="flex items-center gap-1.5 bg-slate-800/80 border border-blue-500/30 rounded-lg px-3 py-1.5 text-xs font-mono text-blue-400"><i
+                            data-lucide="globe" class="w-3 h-3"></i> GitHub Pages CDN</span>
+                </div>
+
+                <!-- Neon Diagram Frame -->
+                <div class="relative mx-auto w-full flex flex-col items-center justify-center rounded-2xl overflow-hidden"
+                    style="background: rgba(0,8,18,0.85); border: 1px solid rgba(0,242,254,0.4); box-shadow: 0 0 30px rgba(0,242,254,0.15), inset 0 0 50px rgba(0,0,0,0.8); min-height: 75vh;">
+                    <!-- Animated top laser line -->
+                    <div class="absolute top-0 left-0 right-0 h-[2px] z-10"
+                        style="background: linear-gradient(90deg, transparent, #00f2fe, #10b981, #00f2fe, transparent); animation: gradientFlow 2s linear infinite;">
+                    </div>
+                    <!-- Corner brackets -->
+                    <div
+                        class="absolute top-3 left-3 w-8 h-8 border-t-2 border-l-2 border-cyan-400/70 pointer-events-none">
+                    </div>
+                    <div
+                        class="absolute top-3 right-3 w-8 h-8 border-t-2 border-r-2 border-cyan-400/70 pointer-events-none">
+                    </div>
+                    <div
+                        class="absolute bottom-3 left-3 w-8 h-8 border-b-2 border-l-2 border-emerald-400/70 pointer-events-none">
+                    </div>
+                    <div
+                        class="absolute bottom-3 right-3 w-8 h-8 border-b-2 border-r-2 border-emerald-400/70 pointer-events-none">
+                    </div>
+                    <!-- Pulsing corner dots -->
+                    <div class="absolute top-2.5 left-2.5 w-2.5 h-2.5 bg-cyan-400 rounded-full pointer-events-none">
+                    </div>
+                    <div
+                        class="absolute top-2.5 right-2.5 w-2.5 h-2.5 bg-cyan-400 rounded-full animate-ping pointer-events-none">
+                    </div>
+                    <div
+                        class="absolute bottom-2.5 left-2.5 w-2.5 h-2.5 bg-emerald-400 rounded-full animate-ping pointer-events-none">
+                    </div>
+                    <div
+                        class="absolute bottom-2.5 right-2.5 w-2.5 h-2.5 bg-emerald-400 rounded-full pointer-events-none">
+                    </div>
+
+                    <!-- Centered diagram -->
+                    <div class="w-full flex items-center justify-center p-10">
+                        <pre class="mermaid"
+                            style="font-size: 13px; width: 100%; max-width: 650px; text-align: center;">
 stateDiagram-v2
     direction TB
 
@@ -385,7 +454,23 @@ stateDiagram-v2
     WriteJSON --> Commit : Write public/results.json
     Commit --> GitHubPages : git commit and push artifact
     GitHubPages --> [*] : 🌐 Live on Global CDN — sub‑second
-                </pre>
+                        </pre>
+                    </div>
+                    <!-- Animated bottom laser line -->
+                    <div class="absolute bottom-0 left-0 right-0 h-[2px] z-10"
+                        style="background: linear-gradient(90deg, transparent, #10b981, #00f2fe, #10b981, transparent); animation: gradientFlow 2.5s linear infinite reverse;">
+                    </div>
+                </div>
+
+                <!-- Legend Row -->
+                <div class="flex justify-center gap-8 mt-6 text-xs font-mono text-slate-500 flex-wrap">
+                    <span class="flex items-center gap-2"><span
+                            class="w-2 h-2 rounded-full bg-cyan-400 inline-block"></span> Input / Trigger</span>
+                    <span class="flex items-center gap-2"><span
+                            class="w-2 h-2 rounded-full bg-purple-400 inline-block"></span> Cloud Execution</span>
+                    <span class="flex items-center gap-2"><span
+                            class="w-2 h-2 rounded-full bg-emerald-400 inline-block"></span> Terminal State</span>
+                </div>
             </div>
         </section>
 
