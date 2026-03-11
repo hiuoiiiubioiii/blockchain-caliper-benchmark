@@ -1392,82 +1392,6 @@
                 animateValue(document.getElementById('readTime'), 0, data.read.timeSec, 1500, 2);
                 animateValue(document.getElementById('readCount'), 0, data.read.count, 1500, 0);
 
-                // --- Init / Update Chart.js Visuals ---
-                const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
-                const ctxLatency = document.getElementById('latencyChart').getContext('2d');
-
-                // Destroy old charts to prevent overlapping renders
-                if (throughputChartInstance) throughputChartInstance.destroy();
-                if (latencyChartInstance) latencyChartInstance.destroy();
-
-                throughputChartInstance = new Chart(ctxThroughput, {
-                    type: 'bar',
-                    data: {
-                        labels: ['Write (TPS)', 'Read (QPS)'],
-                        datasets: [{
-                            label: 'Operations Per Second',
-                            data: [data.write.tps, data.read.qps],
-                            backgroundColor: [
-                                'rgba(56, 189, 248, 0.6)',  // Cyan for Write
-                                'rgba(192, 132, 252, 0.6)'  // Purple for Read
-                            ],
-                            borderColor: [
-                                'rgba(56, 189, 248, 1)',
-                                'rgba(192, 132, 252, 1)'
-                            ],
-                            borderWidth: 2,
-                            borderRadius: 6
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: { display: false }
-                        },
-                        scales: {
-                            y: {
-                                beginAtZero: true,
-                                grid: { color: 'rgba(255, 255, 255, 0.05)' }
-                            },
-                            x: {
-                                grid: { display: false }
-                            }
-                        }
-                    }
-                });
-
-                latencyChartInstance = new Chart(ctxLatency, {
-                    type: 'doughnut',
-                    data: {
-                        labels: ['Write Time (s)', 'Read Time (s)'],
-                        datasets: [{
-                            data: [data.write.timeSec, data.read.timeSec],
-                            backgroundColor: [
-                                'rgba(56, 189, 248, 0.6)',
-                                'rgba(192, 132, 252, 0.6)'
-                            ],
-                            borderColor: [
-                                'rgba(56, 189, 248, 1)',
-                                'rgba(192, 132, 252, 1)'
-                            ],
-                            borderWidth: 2,
-                            hoverOffset: 10
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        cutout: '70%',
-                        plugins: {
-                            legend: {
-                                position: 'bottom',
-                                labels: { color: '#94a3b8' }
-                            }
-                        }
-                    }
-                });
-
                 // Reveal Results Grid Down below
                 resultsHeader.classList.add('opacity-100');
                 resultsGrid.classList.remove('opacity-0', 'scale-95');
@@ -1477,6 +1401,86 @@
                 setTimeout(() => {
                     resultsHeader.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }, 200);
+
+                // --- Init / Update Chart.js Visuals ---
+                // We use a slight delay so the CSS scale-95 transition completes enough 
+                // for Chart.js to accurately measure the container canvas bounds.
+                setTimeout(() => {
+                    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+                    const ctxLatency = document.getElementById('latencyChart').getContext('2d');
+
+                    // Destroy old charts to prevent overlapping renders
+                    if (throughputChartInstance) throughputChartInstance.destroy();
+                    if (latencyChartInstance) latencyChartInstance.destroy();
+
+                    throughputChartInstance = new Chart(ctxThroughput, {
+                        type: 'bar',
+                        data: {
+                            labels: ['Write (TPS)', 'Read (QPS)'],
+                            datasets: [{
+                                label: 'Operations Per Second',
+                                data: [data.write.tps, data.read.qps],
+                                backgroundColor: [
+                                    'rgba(56, 189, 248, 0.6)',  // Cyan for Write
+                                    'rgba(192, 132, 252, 0.6)'  // Purple for Read
+                                ],
+                                borderColor: [
+                                    'rgba(56, 189, 248, 1)',
+                                    'rgba(192, 132, 252, 1)'
+                                ],
+                                borderWidth: 2,
+                                borderRadius: 6
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: { display: false }
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                                },
+                                x: {
+                                    grid: { display: false }
+                                }
+                            }
+                        }
+                    });
+
+                    latencyChartInstance = new Chart(ctxLatency, {
+                        type: 'doughnut',
+                        data: {
+                            labels: ['Write Time (s)', 'Read Time (s)'],
+                            datasets: [{
+                                data: [data.write.timeSec, data.read.timeSec],
+                                backgroundColor: [
+                                    'rgba(56, 189, 248, 0.6)',
+                                    'rgba(192, 132, 252, 0.6)'
+                                ],
+                                borderColor: [
+                                    'rgba(56, 189, 248, 1)',
+                                    'rgba(192, 132, 252, 1)'
+                                ],
+                                borderWidth: 2,
+                                hoverOffset: 10
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            cutout: '70%',
+                            plugins: {
+                                legend: {
+                                    position: 'bottom',
+                                    labels: { color: '#94a3b8' }
+                                }
+                            }
+                        }
+                    });
+                }, 100);
 
             } catch (err) {
                 errorMsg.innerText = err.message;
