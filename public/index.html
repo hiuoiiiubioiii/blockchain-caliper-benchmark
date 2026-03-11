@@ -338,43 +338,53 @@
 
         <!-- System Architecture Diagram Section -->
         <section
-            class="glass-panel rounded-3xl p-8 md:p-10 relative overflow-hidden reveal-on-scroll border border-cyan-500/30 shadow-[0_0_20px_rgba(0,242,254,0.1)]">
-            <h2 class="text-2xl md:text-3xl font-bold mb-8 text-white flex items-center gap-3">
+            class="glass-panel rounded-3xl p-8 md:p-10 relative overflow-hidden reveal-on-scroll border border-cyan-500/30 shadow-[0_0_20px_rgba(0,242,254,0.1)] w-full">
+            <h2 class="text-2xl md:text-3xl font-bold mb-2 text-white flex items-center gap-3">
                 <i data-lucide="git-branch-plus" class="text-cyan-400"></i>
                 Advanced Execution Pipeline
             </h2>
             <p class="text-slate-400 text-sm mb-6 leading-relaxed">
-                A mechanical blueprint of our fully automated Serverless CI/CD flow, charting the network deployment
-                protocol algorithm.
+                A vertical mechanical blueprint of our fully automated Serverless CI/CD flow — from developer commit to
+                global delivery.
             </p>
-            <div
-                class="bg-slate-900/50 p-6 rounded-2xl border border-cyan-500/50 overflow-x-auto w-full flex justify-center shadow-inner relative">
-                <!-- Mechanical accents -->
-                <div class="absolute top-3 left-3 w-2 h-2 bg-cyan-400 rounded-full animate-ping"></div>
-                <div class="absolute top-3 right-3 w-2 h-2 bg-cyan-400 rounded-full"></div>
-                <div class="absolute bottom-3 left-3 w-2 h-2 bg-cyan-400 rounded-full"></div>
-                <div class="absolute bottom-3 right-3 w-2 h-2 bg-cyan-400 rounded-full"></div>
+            <div class="bg-slate-900/50 p-6 rounded-2xl border border-cyan-500/50 w-full flex justify-center shadow-inner relative"
+                style="min-height: 80vh;">
+                <!-- Mechanical corner accents -->
+                <div class="absolute top-3 left-3 w-3 h-3 bg-cyan-400 rounded-full animate-ping opacity-75"></div>
+                <div class="absolute top-3 left-3 w-3 h-3 bg-cyan-400 rounded-full"></div>
+                <div class="absolute top-3 right-3 w-3 h-3 bg-cyan-400 rounded-full"></div>
+                <div class="absolute bottom-3 left-3 w-3 h-3 bg-cyan-400 rounded-full"></div>
+                <div class="absolute bottom-3 right-3 w-3 h-3 bg-cyan-400 rounded-full animate-ping opacity-75"></div>
+                <div class="absolute bottom-3 right-3 w-3 h-3 bg-cyan-400 rounded-full"></div>
+                <!-- Corner bracket decorations -->
+                <div class="absolute top-2 left-2 w-6 h-6 border-t-2 border-l-2 border-cyan-400 opacity-80"></div>
+                <div class="absolute top-2 right-2 w-6 h-6 border-t-2 border-r-2 border-cyan-400 opacity-80"></div>
+                <div class="absolute bottom-2 left-2 w-6 h-6 border-b-2 border-l-2 border-cyan-400 opacity-80"></div>
+                <div class="absolute bottom-2 right-2 w-6 h-6 border-b-2 border-r-2 border-cyan-400 opacity-80"></div>
 
-                <pre class="mermaid">
+                <pre class="mermaid w-full" style="font-size: 14px;">
 stateDiagram-v2
-    direction LR
-    
-    [*] --> GitHub: 1. Code Push
-    
-    state "GitHub Actions Runner" as Pipeline {
-        GitHub --> SetupEnvironment: Trigger Workflow
-        SetupEnvironment --> BootGanache: Init In-Memory Network
-        
-        state "Headless Execution Engine" as Engine {
-            BootGanache --> DeploySmartContracts: Ethers.js Tx
-            DeploySmartContracts --> FireTransactions: 50 Txs Pipeline
-            FireTransactions --> ComputeMetrics: TPS/QPS Analyser
+    direction TB
+
+    [*] --> GitHub : 1. Developer Push to main
+
+    state "☁️ GitHub Actions Runner (ubuntu-latest)" as Pipeline {
+        GitHub --> SetupEnv : Trigger gh-pages.yml workflow
+        SetupEnv --> NodeInstall : Checkout repo
+        NodeInstall --> BootGanache : npm install dependencies
+
+        state "⚙️ Headless Benchmark Engine" as Engine {
+            BootGanache --> DeployContracts : Spin up in-memory Ganache
+            DeployContracts --> FireWrite : ethers.js deploys SecureDataStorage
+            FireWrite --> FireRead : 50x storeData() Promise.all()
+            FireRead --> CalcMetrics : 50x getData() calls
+            CalcMetrics --> WriteJSON : Calculate TPS and QPS
         }
     }
-    
-    ComputeMetrics --> StaticJSON: Export results.json
-    StaticJSON --> GitHubPages: Deploy to Global CDN
-    GitHubPages --> [*]: Live Site Sub-Second
+
+    WriteJSON --> Commit : Write public/results.json
+    Commit --> GitHubPages : git commit and push artifact
+    GitHubPages --> [*] : 🌐 Live on Global CDN — sub‑second
                 </pre>
             </div>
         </section>
