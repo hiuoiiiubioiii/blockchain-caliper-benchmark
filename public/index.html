@@ -66,6 +66,47 @@
             opacity: 1;
             transform: translateY(0);
         }
+
+        /* Lively Text Gradients and Glows */
+        .lively-heading {
+            background: linear-gradient(to right, #60a5fa, #c084fc, #f472b6, #60a5fa);
+            background-size: 200% auto;
+            color: transparent !important;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: gradientFlow 4s linear infinite;
+            filter: drop-shadow(0 0 15px rgba(192, 132, 252, 0.5));
+        }
+
+        @keyframes gradientFlow {
+            0% {
+                background-position: 0% center;
+            }
+
+            100% {
+                background-position: 200% center;
+            }
+        }
+
+        /* Advanced Button Effects */
+        .btn-advanced {
+            background-size: 200% auto;
+            background-image: linear-gradient(to right, #3b82f6 0%, #8b5cf6 25%, #ec4899 50%, #3b82f6 100%);
+            transition: all 0.5s ease;
+            box-shadow: 0 0 30px rgba(139, 92, 246, 0.6), inset 0 0 15px rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            animation: gradientFlow 3s linear infinite;
+        }
+
+        .btn-advanced:hover {
+            background-position: right center;
+            box-shadow: 0 0 50px rgba(236, 72, 153, 0.9), inset 0 0 20px rgba(255, 255, 255, 0.5);
+            transform: translateY(-4px) scale(1.03);
+        }
+
+        .text-glow {
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+        }
     </style>
     <script type="module">
         import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
@@ -89,6 +130,9 @@
 </head>
 
 <body class="bg-[#0f172a] text-white min-h-screen flex flex-col antialiased relative">
+
+    <!-- Blockchain Network Canvas Background -->
+    <canvas id="network-bg" class="fixed inset-0 pointer-events-none z-0 opacity-40 mix-blend-screen"></canvas>
 
     <!-- Glowing Cursor Effect -->
     <div id="cursor-glow"
@@ -412,12 +456,10 @@ graph LR
                     <div class="h-16 hidden sm:block w-px bg-slate-700 mx-2"></div>
 
                     <button id="runBtn"
-                        class="group relative mt-7 sm:mt-0 flex items-center justify-center gap-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white px-10 py-4 rounded-2xl font-bold text-lg shadow-[0_0_20px_rgba(79,70,229,0.4)] transition-all hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden">
-                        <div
-                            class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out">
-                        </div>
-                        <i data-lucide="play" class="w-6 h-6 z-10"></i>
-                        <span class="z-10 tracking-wide" id="btnText">Initiate Benchmark</span>
+                        class="group relative mt-7 sm:mt-0 flex items-center justify-center gap-3 text-white px-10 py-5 rounded-2xl font-black text-xl btn-advanced overflow-hidden tracking-widest uppercase disabled:opacity-50 disabled:cursor-not-allowed">
+                        <i data-lucide="rocket"
+                            class="w-7 h-7 z-10 drop-shadow-[0_0_10px_rgba(255,255,255,0.8)] transition-transform duration-500 group-hover:-translate-y-1 group-hover:translate-x-1"></i>
+                        <span class="z-10 text-glow" id="btnText">Initiate Benchmark</span>
                     </button>
                 </div>
 
@@ -616,6 +658,80 @@ graph LR
         document.querySelectorAll('.reveal-on-scroll').forEach((section) => {
             scrollObserver.observe(section);
         });
+
+        // Dynamically inject lively glowing headers
+        document.querySelectorAll('h1, h2, h3').forEach(el => {
+            el.classList.add('lively-heading');
+            el.classList.remove('text-white', 'text-slate-100');
+        });
+
+        // Blockchain Network Canvas Animation
+        const canvas = document.getElementById('network-bg');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let nodes = [];
+
+        function resizeCanvas() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Node {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 1.5;
+                this.vy = (Math.random() - 0.5) * 1.5;
+                this.radius = Math.random() * 2 + 1;
+                this.color = ['#60a5fa', '#c084fc', '#f472b6'][Math.floor(Math.random() * 3)];
+            }
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                if (this.x < 0 || this.x > width) this.vx *= -1;
+                if (this.y < 0 || this.y > height) this.vy *= -1;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = this.color;
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            }
+        }
+
+        // Adjust node count based on screen size
+        const nodeCount = window.innerWidth < 768 ? 40 : 100;
+        for (let i = 0; i < nodeCount; i++) nodes.push(new Node());
+
+        function animateNetwork() {
+            ctx.clearRect(0, 0, width, height);
+            for (let i = 0; i < nodes.length; i++) {
+                nodes[i].update();
+                nodes[i].draw();
+                for (let j = i + 1; j < nodes.length; j++) {
+                    const dx = nodes[i].x - nodes[j].x;
+                    const dy = nodes[i].y - nodes[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 180) {
+                        ctx.beginPath();
+                        ctx.moveTo(nodes[i].x, nodes[i].y);
+                        ctx.lineTo(nodes[j].x, nodes[j].y);
+
+                        const opacity = 1 - dist / 180;
+                        ctx.strokeStyle = `rgba(167, 139, 250, ${opacity * 0.4})`;
+                        ctx.lineWidth = opacity * 1.5;
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animateNetwork);
+        }
+        animateNetwork();
 
         // Number animation function
         function animateValue(obj, start, end, duration, decimals = 2) {
