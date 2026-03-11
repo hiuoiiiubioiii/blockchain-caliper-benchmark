@@ -206,6 +206,82 @@
             </p>
         </header>
 
+        <!-- UG Research Context Section -->
+        <section
+            class="glass-panel rounded-3xl p-8 md:p-10 relative overflow-hidden reveal-on-scroll border border-cyan-500/30 shadow-[0_0_40px_rgba(0,242,254,0.1)]">
+
+            <!-- Academic badge -->
+            <div
+                class="absolute top-0 right-0 bg-cyan-500/20 text-cyan-400 text-xs font-bold px-4 py-2 rounded-bl-2xl border-b border-l border-cyan-500/30 flex items-center gap-2 uppercase tracking-widest shadow-lg">
+                <i data-lucide="graduation-cap" class="w-4 h-4"></i> UG Research (CSET-306)
+            </div>
+
+            <h2 class="text-2xl md:text-3xl font-bold mb-8 text-white flex items-center gap-3">
+                <i data-lucide="microscope" class="text-cyan-400"></i>
+                Research Context: Mid-Evaluation
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-slate-300">
+
+                <!-- 1. Introduction & Objective -->
+                <div
+                    class="bg-slate-900/40 p-6 rounded-2xl border border-blue-500/10 hover:border-blue-500/30 transition-all duration-300">
+                    <h3 class="font-bold text-lg text-blue-300 mb-3 flex items-center gap-2">
+                        <i data-lucide="target" class="w-5 h-5"></i> 1. Introduction & Objective
+                    </h3>
+                    <p class="text-sm leading-relaxed opacity-90">
+                        Blockchain platforms suffer from throughput bottlenecks. As EVM adoption grows, precise capacity
+                        planning is essential. The objective of this research is to construct a lightweight, headless
+                        benchmarking engine capable of stressing EVM chains directly via RPC, bypassing the overhead of
+                        heavyweight external frameworks.
+                    </p>
+                </div>
+
+                <!-- 2. Problem Definition & Research Gap -->
+                <div
+                    class="bg-slate-900/40 p-6 rounded-2xl border border-red-500/10 hover:border-red-500/30 transition-all duration-300">
+                    <h3 class="font-bold text-lg text-red-300 mb-3 flex items-center gap-2">
+                        <i data-lucide="alert-triangle" class="w-5 h-5"></i> 2. Problem Definition & Gap
+                    </h3>
+                    <p class="text-sm leading-relaxed opacity-90">
+                        Existing tools (like official Hyperledger Caliper) demand complex Docker orchestrations and
+                        localized dependencies, restricting agile CI/CD integration. <strong>The Gap:</strong> A lack of
+                        serverless, self-contained benchmarking pipelines that can execute in cloud-runners and reliably
+                        publish static TPS telemetry globally.
+                    </p>
+                </div>
+
+                <!-- 3. Literature Review Context -->
+                <div
+                    class="bg-slate-900/40 p-6 rounded-2xl border border-purple-500/10 hover:border-purple-500/30 transition-all duration-300">
+                    <h3 class="font-bold text-lg text-purple-300 mb-3 flex items-center gap-2">
+                        <i data-lucide="library" class="w-5 h-5"></i> 3. Literature Review Context
+                    </h3>
+                    <p class="text-sm leading-relaxed opacity-90">
+                        Current literature emphasizes the necessity of isolated testnets (Dinh et al.) to prevent
+                        network noise from polluting metrics. This project adapts these established principles by
+                        leveraging <code>ganache</code> for mathematically sterile, in-memory execution boundaries,
+                        ensuring empirical validity of the captured TPS payloads.
+                    </p>
+                </div>
+
+                <!-- 4. Proposed Methodology -->
+                <div
+                    class="bg-slate-900/40 p-6 rounded-2xl border border-emerald-500/10 hover:border-emerald-500/30 transition-all duration-300">
+                    <h3 class="font-bold text-lg text-emerald-300 mb-3 flex items-center gap-2">
+                        <i data-lucide="git-merge" class="w-5 h-5"></i> 4. Proposed Methodology
+                    </h3>
+                    <p class="text-sm leading-relaxed opacity-90">
+                        A fully automated CI/CD pipeline triggered by a Developer Push. A GitHub runner provisions
+                        Node.js and Ganache, compiles the <code>SecureDataStorage</code> contract, fires concurrent
+                        <code>Promise.all()</code> read/write barrages via <code>ethers.js</code>, serializes metrics
+                        into JSON, and statically deploys the payload to a Global CDN.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
         <!-- Project Logic Explanation Section -->
         <section
             class="glass-panel rounded-3xl p-8 md:p-10 explanation-section relative overflow-hidden reveal-on-scroll">
