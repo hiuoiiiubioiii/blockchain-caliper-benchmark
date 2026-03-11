@@ -8,6 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -859,6 +860,31 @@
 
         </div>
 
+        <!-- Visual Analytics Graphs -->
+        <div class="grid md:grid-cols-2 gap-8 mt-8">
+            <!-- Throughput Chart (Bar) -->
+            <div class="stat-card glass-panel rounded-3xl p-6 border border-slate-700/50 relative overflow-hidden">
+                <div class="absolute -right-10 -top-10 w-32 h-32 bg-cyan-500/10 rounded-full blur-2xl"></div>
+                <h3 class="text-sm font-bold text-slate-300 mb-4 flex items-center gap-2">
+                    <i data-lucide="bar-chart-3" class="w-4 h-4 text-cyan-400"></i> Throughput Comparison
+                </h3>
+                <div class="h-64 w-full">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Latency Chart (Doughnut) -->
+            <div class="stat-card glass-panel rounded-3xl p-6 border border-slate-700/50 relative overflow-hidden">
+                <div class="absolute -left-10 -bottom-10 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl"></div>
+                <h3 class="text-sm font-bold text-slate-300 mb-4 flex items-center gap-2">
+                    <i data-lucide="pie-chart" class="w-4 h-4 text-emerald-400"></i> Operation Latency
+                </h3>
+                <div class="h-64 w-full flex justify-center">
+                    <canvas id="latencyChart"></canvas>
+                </div>
+            </div>
+        </div>
+
         <!-- Error Banner -->
         <div id="errorBanner"
             class="hidden w-full mt-6 bg-red-900/50 border border-red-500 text-red-100 p-5 rounded-2xl flex items-center gap-4">
@@ -894,6 +920,14 @@
         const resultsGrid = document.getElementById('resultsGrid');
         const errorBanner = document.getElementById('errorBanner');
         const errorMsg = document.getElementById('errorMsg');
+
+        // Chart.js Global Instances
+        let throughputChartInstance = null;
+        let latencyChartInstance = null;
+
+        // Chart.js Default styling tweaks for dark theme
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.font.family = "'Inter', sans-serif";
 
         // Advanced Web Effects: Mouse glow tracking
         const cursorGlow = document.getElementById('cursor-glow');
@@ -1109,6 +1143,82 @@
                 animateValue(document.getElementById('readQps'), 0, data.read.qps, 2000, 2);
                 animateValue(document.getElementById('readTime'), 0, data.read.timeSec, 1500, 2);
                 animateValue(document.getElementById('readCount'), 0, data.read.count, 1500, 0);
+
+                // --- Init / Update Chart.js Visuals ---
+                const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+                const ctxLatency = document.getElementById('latencyChart').getContext('2d');
+
+                // Destroy old charts to prevent overlapping renders
+                if (throughputChartInstance) throughputChartInstance.destroy();
+                if (latencyChartInstance) latencyChartInstance.destroy();
+
+                throughputChartInstance = new Chart(ctxThroughput, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Write (TPS)', 'Read (QPS)'],
+                        datasets: [{
+                            label: 'Operations Per Second',
+                            data: [data.write.tps, data.read.qps],
+                            backgroundColor: [
+                                'rgba(56, 189, 248, 0.6)',  // Cyan for Write
+                                'rgba(192, 132, 252, 0.6)'  // Purple for Read
+                            ],
+                            borderColor: [
+                                'rgba(56, 189, 248, 1)',
+                                'rgba(192, 132, 252, 1)'
+                            ],
+                            borderWidth: 2,
+                            borderRadius: 6
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                            },
+                            x: {
+                                grid: { display: false }
+                            }
+                        }
+                    }
+                });
+
+                latencyChartInstance = new Chart(ctxLatency, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Write Time (s)', 'Read Time (s)'],
+                        datasets: [{
+                            data: [data.write.timeSec, data.read.timeSec],
+                            backgroundColor: [
+                                'rgba(56, 189, 248, 0.6)',
+                                'rgba(192, 132, 252, 0.6)'
+                            ],
+                            borderColor: [
+                                'rgba(56, 189, 248, 1)',
+                                'rgba(192, 132, 252, 1)'
+                            ],
+                            borderWidth: 2,
+                            hoverOffset: 10
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        cutout: '70%',
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: { color: '#94a3b8' }
+                            }
+                        }
+                    }
+                });
 
                 // Reveal Results Grid Down below
                 resultsHeader.classList.add('opacity-100');
