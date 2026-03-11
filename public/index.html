@@ -1011,7 +1011,7 @@
             Analytics & Results</h2>
 
         <div id="resultsGrid"
-            class="w-full grid grid-cols-1 md:grid-cols-2 gap-8 opacity-0 transition-opacity duration-700 pointer-events-none mt-2">
+            class="w-full grid grid-cols-1 md:grid-cols-2 gap-8 opacity-0 h-0 overflow-hidden transition-opacity duration-700 pointer-events-none mt-2">
 
             <!-- Write Metrics (TPS) -->
             <div
@@ -1394,8 +1394,15 @@
 
                 // Reveal Results Grid Down below
                 resultsHeader.classList.add('opacity-100');
-                resultsGrid.classList.remove('opacity-0', 'scale-95');
-                resultsGrid.classList.add('opacity-100', 'scale-100', 'pointer-events-auto');
+
+                // Remove the height collapse
+                resultsGrid.classList.remove('h-0', 'overflow-hidden');
+
+                // Allow a tiny browser reflow tick for the new height to apply before fading in
+                setTimeout(() => {
+                    resultsGrid.classList.remove('opacity-0', 'scale-95');
+                    resultsGrid.classList.add('opacity-100', 'scale-100', 'pointer-events-auto');
+                }, 50);
 
                 // Scroll down smoothly to show results
                 setTimeout(() => {
@@ -1403,8 +1410,8 @@
                 }, 200);
 
                 // --- Init / Update Chart.js Visuals ---
-                // We use a slight delay so the CSS scale-95 transition completes enough 
-                // for Chart.js to accurately measure the container canvas bounds.
+                // Wait for the CSS expansion transition (~700ms) to mostly finish so Chart.js 
+                // gets the true pixel dimensions of the 100% height container.
                 setTimeout(() => {
                     const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
                     const ctxLatency = document.getElementById('latencyChart').getContext('2d');
@@ -1421,15 +1428,15 @@
                                 label: 'Operations Per Second',
                                 data: [data.write.tps, data.read.qps],
                                 backgroundColor: [
-                                    'rgba(56, 189, 248, 0.6)',  // Cyan for Write
-                                    'rgba(192, 132, 252, 0.6)'  // Purple for Read
+                                    'rgba(56, 189, 248, 0.8)',  // Cyan for Write
+                                    'rgba(192, 132, 252, 0.8)'  // Purple for Read
                                 ],
                                 borderColor: [
                                     'rgba(56, 189, 248, 1)',
                                     'rgba(192, 132, 252, 1)'
                                 ],
-                                borderWidth: 2,
-                                borderRadius: 6
+                                borderWidth: 1,
+                                borderRadius: 4
                             }]
                         },
                         options: {
@@ -1457,30 +1464,30 @@
                             datasets: [{
                                 data: [data.write.timeSec, data.read.timeSec],
                                 backgroundColor: [
-                                    'rgba(56, 189, 248, 0.6)',
-                                    'rgba(192, 132, 252, 0.6)'
+                                    'rgba(56, 189, 248, 0.8)',
+                                    'rgba(192, 132, 252, 0.8)'
                                 ],
                                 borderColor: [
-                                    'rgba(56, 189, 248, 1)',
-                                    'rgba(192, 132, 252, 1)'
+                                    'rgba(15, 23, 42, 1)',
+                                    'rgba(15, 23, 42, 1)'
                                 ],
-                                borderWidth: 2,
+                                borderWidth: 3,
                                 hoverOffset: 10
                             }]
                         },
                         options: {
                             responsive: true,
                             maintainAspectRatio: false,
-                            cutout: '70%',
+                            cutout: '75%',
                             plugins: {
                                 legend: {
                                     position: 'bottom',
-                                    labels: { color: '#94a3b8' }
+                                    labels: { color: '#94a3b8', padding: 20 }
                                 }
                             }
                         }
                     });
-                }, 100);
+                }, 300);
 
             } catch (err) {
                 errorMsg.innerText = err.message;
