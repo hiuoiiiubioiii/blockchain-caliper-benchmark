@@ -581,7 +581,8 @@
                             <h3 class="text-lg font-bold text-white mb-1">7. Caliper Read Workload</h3>
                             <p class="text-slate-400 text-sm">Simulates the Caliper query testing via concurrent
                                 <code>getData()</code> calls — pure
-                                RPC lookups measuring raw off-chain query retrieval speeds.</p>
+                                RPC lookups measuring raw off-chain query retrieval speeds.
+                            </p>
                         </div>
                     </div>
                     <div
@@ -744,19 +745,6 @@
                 </div>
                 <h2 class="text-2xl font-bold mb-2 text-white">Execute Benchmark</h2>
 
-                <div id="staticWarning"
-                    class="bg-blue-900/30 border border-blue-500/30 rounded-xl p-4 mb-8 max-w-2xl mx-auto text-left transition-all">
-                    <p class="text-blue-300 text-sm flex gap-3 items-start">
-                        <i data-lucide="info" class="w-5 h-5 flex-shrink-0 mt-0.5"></i>
-                        <span>
-                            <strong>Important Note:</strong> Because this site is hosted globally on GitHub Pages (which
-                            only supports static files), the benchmark button below will stream the pre-generated
-                            <code>results.json</code> snapshot data from the latest CI/CD run. <br><br>
-                            To dynamically test custom transaction counts, you must clone the repository and run the
-                            Node.js Express server locally!
-                        </span>
-                    </p>
-                </div>
 
                 <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
                     <div id="txInputWrapper"
@@ -1118,7 +1106,6 @@
             const modeBadge = document.getElementById('modeBadge');
             modeBadge.className = "inline-block bg-green-500/20 text-green-400 text-xs font-bold px-3 py-1 rounded-full mb-3 shadow-[0_0_10px_rgba(34,197,94,0.3)] transition-all";
             document.getElementById('modeText').innerText = "Live Local Server";
-            document.getElementById('staticWarning').classList.add('hidden');
 
             const txInputWrapper = document.getElementById('txInputWrapper');
             txInputWrapper.classList.remove('opacity-50', 'cursor-not-allowed');
