@@ -442,7 +442,7 @@
             <div class="flex items-center justify-between mb-4 flex-wrap gap-4">
                 <h2 class="text-2xl md:text-3xl font-bold lively-heading flex items-center gap-3">
                     <i data-lucide="git-branch-plus" class="text-cyan-400 w-6 h-6"></i>
-                    Advanced Execution Pipeline
+                    Hyperledger Caliper Execution Pipeline
                 </h2>
                 <div class="flex items-center gap-3">
                     <span
@@ -456,8 +456,8 @@
                 </div>
             </div>
             <p class="text-slate-400 text-sm mb-12 leading-relaxed">
-                Every state transition from <code class="text-cyan-400">git push</code> to global CDN delivery — fully
-                automated, zero human intervention.
+                Every state transition from <code class="text-cyan-400">git push</code> to global CDN delivery —
+                executing the Custom Caliper Node.js Engine fully automated, with zero human intervention.
             </p>
 
             <div class="relative max-w-4xl mx-auto">
@@ -564,9 +564,10 @@
                     <div class="md:w-1/2 flex justify-start md:pl-12 w-full pl-16">
                         <div
                             class="glass-panel p-5 rounded-2xl border border-indigo-500/20 w-full group-hover:border-indigo-500/50 transition-all duration-300 group-hover:-translate-y-1 transform text-left">
-                            <h3 class="text-lg font-bold text-white mb-1">6. 50× Write Transactions</h3>
-                            <p class="text-slate-400 text-sm">Fires 50 concurrent <code>storeData()</code> calls via
-                                <code>Promise.all()</code> to stress-test write throughput on the live network.
+                            <h3 class="text-lg font-bold text-white mb-1">6. Caliper Write Workload</h3>
+                            <p class="text-slate-400 text-sm">Simulates the Caliper methodology by firing concurrent
+                                <code>storeData()</code> mutations. Awaits network consensus to measure state-change
+                                throughput.
                             </p>
                         </div>
                     </div>
@@ -577,9 +578,10 @@
                     <div class="md:w-1/2 flex justify-start md:justify-end md:pr-12 w-full pl-16 md:pl-0">
                         <div
                             class="glass-panel p-5 rounded-2xl border border-pink-500/20 w-full group-hover:border-pink-500/50 transition-all duration-300 group-hover:-translate-y-1 transform text-left md:text-right">
-                            <h3 class="text-lg font-bold text-white mb-1">7. 50× Read Queries</h3>
-                            <p class="text-slate-400 text-sm">Fires 50 concurrent <code>getData()</code> calls — pure
-                                RPC lookups with no block confirmation wait, measuring raw query speed.</p>
+                            <h3 class="text-lg font-bold text-white mb-1">7. Caliper Read Workload</h3>
+                            <p class="text-slate-400 text-sm">Simulates the Caliper query testing via concurrent
+                                <code>getData()</code> calls — pure
+                                RPC lookups measuring raw off-chain query retrieval speeds.</p>
                         </div>
                     </div>
                     <div
