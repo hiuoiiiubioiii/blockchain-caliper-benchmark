@@ -966,24 +966,34 @@
             <div class="relative z-10">
                 <div
                     class="inline-block bg-purple-500/20 text-purple-400 text-xs font-bold px-3 py-1 rounded-full mb-3 shadow-[0_0_10px_rgba(168,85,247,0.3)]">
-                    <i data-lucide="sparkles" class="w-3 h-3 inline-block -mt-1 mr-1"></i> Advanced Website
+                    <i data-lucide="sparkles" class="w-3 h-3 inline-block -mt-1 mr-1"></i> Static Demo Mode
                 </div>
                 <h2 class="text-2xl font-bold mb-2 text-white">Execute Benchmark</h2>
-                <p class="text-slate-400 mb-8 text-sm max-w-xl mx-auto">
-                    Note: As this site is hosted globally using modern architecture on GitHub Pages, executing the
-                    benchmark will instantly stream the latest pre-generated CI/CD JSON snapshot data.
-                </p>
+
+                <div class="bg-blue-900/30 border border-blue-500/30 rounded-xl p-4 mb-8 max-w-2xl mx-auto text-left">
+                    <p class="text-blue-300 text-sm flex gap-3 items-start">
+                        <i data-lucide="info" class="w-5 h-5 flex-shrink-0 mt-0.5"></i>
+                        <span>
+                            <strong>Important Note:</strong> Because this site is hosted globally on GitHub Pages (which
+                            only supports static files), the benchmark button below will stream the pre-generated
+                            <code>results.json</code> snapshot data from the latest CI/CD run. <br><br>
+                            To dynamically test custom transaction counts, you must clone the repository and run the
+                            Node.js Express server locally!
+                        </span>
+                    </p>
+                </div>
 
                 <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
-                    <div class="flex flex-col items-start gap-2">
+                    <div class="flex flex-col items-start gap-2 opacity-50 cursor-not-allowed"
+                        title="Disabled in Static Demo Mode">
                         <label for="txCount"
                             class="text-sm font-semibold text-slate-300 ml-1 uppercase tracking-wider text-xs">Test
                             Transaction Count</label>
                         <div class="relative">
                             <i data-lucide="layers"
                                 class="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-500"></i>
-                            <input type="number" id="txCount" value="50" min="1" max="1000"
-                                class="pl-12 pr-6 py-4 bg-slate-800/80 border border-slate-600 rounded-2xl text-white text-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all shadow-inner w-56 font-medium">
+                            <input type="number" id="txCount" value="50" disabled
+                                class="pl-12 pr-6 py-4 bg-slate-800/80 border border-slate-600 rounded-2xl text-white text-lg focus:outline-none transition-all shadow-inner w-56 font-medium cursor-not-allowed">
                         </div>
                     </div>
 
@@ -993,7 +1003,7 @@
                         class="group relative mt-7 sm:mt-0 flex items-center justify-center gap-3 text-white px-10 py-5 rounded-2xl font-black text-xl btn-advanced overflow-hidden tracking-widest uppercase disabled:opacity-50 disabled:cursor-not-allowed">
                         <i data-lucide="rocket"
                             class="w-7 h-7 z-10 drop-shadow-[0_0_10px_rgba(255,255,255,0.8)] transition-transform duration-500 group-hover:-translate-y-1 group-hover:translate-x-1"></i>
-                        <span class="z-10 text-glow" id="btnText">Initiate Benchmark</span>
+                        <span class="z-10 text-glow" id="btnText">Stream Latest Results</span>
                     </button>
                 </div>
 
