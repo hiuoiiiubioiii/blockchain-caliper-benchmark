@@ -355,11 +355,29 @@
                 Engineering Evolution: How It Was Built
             </h2>
             <p class="text-slate-400 text-sm mb-6 leading-relaxed">
-                This project was not built in a single step. It is the culmination of three distinct architectural
-                phases, transforming a basic terminal script into a globally distributed web application:
+                This project was heavily inspired by the official <strong>Hyperledger Caliper</strong> architecture, but
+                evolved through four distinct engineering phases to transform from a static CLI tool into a dynamic,
+                globally accessible web application:
             </p>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-slate-300">
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 text-slate-300">
+                <!-- Phase 0 -->
+                <div
+                    class="glass-panel p-6 rounded-2xl border border-blue-500/20 hover:border-blue-500/50 transition-all group relative overflow-hidden">
+                    <div
+                        class="absolute -right-6 -top-6 w-24 h-24 bg-blue-500/10 rounded-full blur-2xl group-hover:bg-blue-500/20 transition-all">
+                    </div>
+                    <h3 class="font-bold text-lg text-white mb-3 flex items-center gap-2">
+                        <span
+                            class="bg-blue-500/20 text-blue-400 w-8 h-8 rounded-full flex items-center justify-center text-sm font-black border border-blue-500/30">0</span>
+                        Hyperledger Foundation
+                    </h3>
+                    <p class="text-sm opacity-90 leading-relaxed">The repository encompasses full <strong>Hyperledger
+                            Caliper</strong> configurations. However, because native Caliper is a heavy, static CLI
+                        tool, it is impossible to embed into a real-time, interactive website dashboard.
+                    </p>
+                </div>
+
                 <!-- Phase 1 -->
                 <div
                     class="glass-panel p-6 rounded-2xl border border-orange-500/20 hover:border-orange-500/50 transition-all group relative overflow-hidden">
@@ -371,9 +389,10 @@
                             class="bg-orange-500/20 text-orange-400 w-8 h-8 rounded-full flex items-center justify-center text-sm font-black border border-orange-500/30">1</span>
                         Engine Refactoring
                     </h3>
-                    <p class="text-sm opacity-90 leading-relaxed">We began with a raw Node.js script. I refactored
-                        <code>custom-benchmark.js</code> to isolate the Ganache transactions and securely return the
-                        TPS/QPS metrics as JSON instead of simply printing to the console.
+                    <p class="text-sm opacity-90 leading-relaxed">To solve this, I wrote a custom, lightweight
+                        simulation engine (`custom-benchmark.js`) using <strong>Ethers.js</strong> and
+                        <strong>Ganache</strong> that perfectly mirrors Caliper's methodology, returning JSON TPS/QPS
+                        analytics.
                     </p>
                 </div>
 
