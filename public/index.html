@@ -69,13 +69,15 @@
 
         /* Lively Text Gradients and Glows */
         .lively-heading {
-            background: linear-gradient(to right, #60a5fa, #c084fc, #f472b6, #60a5fa);
+            background: linear-gradient(to right, #00f2fe, #4facfe, #00f2fe);
             background-size: 200% auto;
             color: transparent !important;
             -webkit-background-clip: text;
             background-clip: text;
             animation: gradientFlow 4s linear infinite;
-            filter: drop-shadow(0 0 15px rgba(192, 132, 252, 0.5));
+            filter: drop-shadow(0 0 15px rgba(0, 242, 254, 0.5));
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
         @keyframes gradientFlow {
@@ -88,19 +90,53 @@
             }
         }
 
+        /* Mechanical Framework Effects */
+        .mechanical-grid {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            background-size: 50px 50px;
+            background-image:
+                linear-gradient(to right, rgba(0, 242, 254, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0, 242, 254, 0.03) 1px, transparent 1px);
+        }
+
+        .scanline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 15vh;
+            background: linear-gradient(0deg, transparent, rgba(0, 242, 254, 0.15), transparent);
+            pointer-events: none;
+            z-index: 50;
+            animation: scanline-anim 4s linear infinite;
+        }
+
+        @keyframes scanline-anim {
+            0% {
+                transform: translateY(-100vh);
+            }
+
+            100% {
+                transform: translateY(200vh);
+            }
+        }
+
         /* Advanced Button Effects */
         .btn-advanced {
             background-size: 200% auto;
-            background-image: linear-gradient(to right, #3b82f6 0%, #8b5cf6 25%, #ec4899 50%, #3b82f6 100%);
+            background-image: linear-gradient(to right, #10b981 0%, #059669 25%, #047857 50%, #10b981 100%);
             transition: all 0.5s ease;
-            box-shadow: 0 0 30px rgba(139, 92, 246, 0.6), inset 0 0 15px rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 30px rgba(16, 185, 129, 0.6), inset 0 0 15px rgba(255, 255, 255, 0.3);
             border: 1px solid rgba(255, 255, 255, 0.4);
             animation: gradientFlow 3s linear infinite;
         }
 
         .btn-advanced:hover {
             background-position: right center;
-            box-shadow: 0 0 50px rgba(236, 72, 153, 0.9), inset 0 0 20px rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 50px rgba(16, 185, 129, 0.9), inset 0 0 20px rgba(255, 255, 255, 0.5);
             transform: translateY(-4px) scale(1.03);
         }
 
@@ -115,21 +151,24 @@
             theme: 'base',
             themeVariables: {
                 background: 'transparent',
-                primaryColor: '#1e293b',
-                primaryTextColor: '#f8fafc',
-                primaryBorderColor: '#3b82f6',
-                lineColor: '#64748b',
-                secondaryColor: '#0f172a',
-                tertiaryColor: '#1e293b',
-                nodeBorder: '#3b82f6',
-                clusterBkg: 'rgba(30, 41, 59, 0.4)',
-                clusterBorder: 'rgba(56, 189, 248, 0.5)'
+                primaryColor: '#0f172a',
+                primaryTextColor: '#00f2fe',
+                primaryBorderColor: '#00f2fe',
+                lineColor: '#10b981',
+                secondaryColor: '#1e293b',
+                tertiaryColor: '#0f172a',
+                nodeBorder: '#00f2fe',
+                clusterBkg: 'rgba(0, 242, 254, 0.05)',
+                clusterBorder: 'rgba(16, 185, 129, 0.8)'
             }
         });
     </script>
 </head>
 
 <body class="bg-[#0f172a] text-white min-h-screen flex flex-col antialiased relative">
+
+    <div class="mechanical-grid"></div>
+    <div class="scanline"></div>
 
     <!-- Blockchain Network Canvas Background -->
     <canvas id="network-bg" class="fixed inset-0 pointer-events-none z-0 opacity-40 mix-blend-screen"></canvas>
@@ -298,41 +337,44 @@
         </section>
 
         <!-- System Architecture Diagram Section -->
-        <section class="glass-panel rounded-3xl p-8 md:p-10 relative overflow-hidden reveal-on-scroll">
+        <section
+            class="glass-panel rounded-3xl p-8 md:p-10 relative overflow-hidden reveal-on-scroll border border-cyan-500/30 shadow-[0_0_20px_rgba(0,242,254,0.1)]">
             <h2 class="text-2xl md:text-3xl font-bold mb-8 text-white flex items-center gap-3">
-                <i data-lucide="share-2" class="text-pink-400"></i>
-                Complete File Architecture
+                <i data-lucide="git-branch-plus" class="text-cyan-400"></i>
+                Advanced Execution Pipeline
             </h2>
             <p class="text-slate-400 text-sm mb-6 leading-relaxed">
-                The underlying filesystem generated to power this static serverless web application and its CI/CD
-                pipeline infrastructure.
+                A mechanical blueprint of our fully automated Serverless CI/CD flow, charting the network deployment
+                protocol algorithm.
             </p>
             <div
-                class="bg-slate-900/50 p-6 rounded-2xl border border-slate-700/50 overflow-x-auto w-full flex justify-center shadow-inner">
+                class="bg-slate-900/50 p-6 rounded-2xl border border-cyan-500/50 overflow-x-auto w-full flex justify-center shadow-inner relative">
+                <!-- Mechanical accents -->
+                <div class="absolute top-3 left-3 w-2 h-2 bg-cyan-400 rounded-full animate-ping"></div>
+                <div class="absolute top-3 right-3 w-2 h-2 bg-cyan-400 rounded-full"></div>
+                <div class="absolute bottom-3 left-3 w-2 h-2 bg-cyan-400 rounded-full"></div>
+                <div class="absolute bottom-3 right-3 w-2 h-2 bg-cyan-400 rounded-full"></div>
+
                 <pre class="mermaid">
-graph LR
-    Root[📁 blockchain-caliper-benchmark] --> GH[📁 .github]
-    Root --> CW[📁 caliper-workspace]
-    Root --> Contracts[📁 contracts]
-    Root --> Public[📁 public]
-    Root --> RootFiles[📄 Core Scripts]
-
-    %% GitHub Actions
-    GH --> Workflows[📁 workflows]
-    Workflows --> Benchmark[📄 benchmark.yml <br/> <i>Tests code on every commit</i>]
-    Workflows --> GHPages[📄 gh-pages.yml <br/> <i>Generates & deploys website</i>]
-
-    %% UI & Frontend
-    Public --> HTML[📄 index.html <br/> <i>The UI Dashboard</i>]
-    Public --> Results[📄 results.json <br/> <i>The compiled data snapshot</i>]
-
-    %% Core Backend Logic
-    RootFiles --> Custom[📄 custom-benchmark.js <br/> <i>Ganache/Ethers Logic</i>]
-    RootFiles --> GenStatic[📄 generate-static-benchmark.js <br/> <i>Builds the JSON</i>]
-    RootFiles --> Server[📄 server.js <br/> <i>Local Express backend</i>]
-    RootFiles --> Tunnel[📄 tunnel.js <br/> <i>LocalTunnel forwarder</i>]
-    RootFiles --> PkgJSON[📄 package.json <br/> <i>Dependencies & Scripts</i>]
-    RootFiles --> Render[📄 render.yaml <br/> <i>Render PaaS Config</i>]
+stateDiagram-v2
+    direction LR
+    
+    [*] --> GitHub: 1. Code Push
+    
+    state "GitHub Actions Runner" as Pipeline {
+        GitHub --> SetupEnvironment: Trigger Workflow
+        SetupEnvironment --> BootGanache: Init In-Memory Network
+        
+        state "Headless Execution Engine" as Engine {
+            BootGanache --> DeploySmartContracts: Ethers.js Tx
+            DeploySmartContracts --> FireTransactions: 50 Txs Pipeline
+            FireTransactions --> ComputeMetrics: TPS/QPS Analyser
+        }
+    }
+    
+    ComputeMetrics --> StaticJSON: Export results.json
+    StaticJSON --> GitHubPages: Deploy to Global CDN
+    GitHubPages --> [*]: Live Site Sub-Second
                 </pre>
             </div>
         </section>
